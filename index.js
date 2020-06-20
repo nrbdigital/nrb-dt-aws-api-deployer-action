@@ -40,7 +40,7 @@ try {
   if (!fs.existsSync(swaggerMergedPath)){
     fs.mkdirSync(swaggerMergedPath);
 }
-  fs.writeFileSync(swaggerMergedPath, data);
+  fs.writeFileSync(swaggerMergedPath, mergedJson);
   core.setOutput("merged-swagger-path", swaggerMergedPath);
 } catch (error) {
   core.setFailed(error.message);
