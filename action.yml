@@ -1,0 +1,15 @@
+name: 'AWS API GTW swagger merger'
+description: 'Merge a swagger with extension from AWS API GTW with a standard swagger from a JAVA project'
+inputs:
+  swagger-path:
+    description: 'the path of the swagger file'
+    required: true
+  swagger-with-extension-path:
+    description: 'the path of the swagger file with extension coming from AWS API GTW'
+    required: true    
+outputs:
+  swagger-merged-path: # id of output
+    description: 'the path of the merged swagger file'
+runs:
+  using: 'node12'
+  main: 'index.js'
