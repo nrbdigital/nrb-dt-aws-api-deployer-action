@@ -34,6 +34,9 @@ try {
 
   // Save the merged JSON in a file
   const swaggerMergedPath = path.join(process.env.temp, 'merged-swagger.json');
+  if (!fs.existsSync(swaggerMergedPath)){
+    fs.mkdirSync(swaggerMergedPath);
+}
   fs.writeFileSync(swaggerMergedPath, data);
   core.setOutput("merged-swagger-path", swaggerMergedPath);
 } catch (error) {
