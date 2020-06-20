@@ -6,7 +6,10 @@ inputs:
     required: true
   swagger-with-extension-path:
     description: 'the path of the swagger file with extension coming from AWS API GTW'
-    required: true    
+    required: true
+  tmp-path:
+    description: 'A directory to store temporary files'
+    required: true           
 outputs:
   swagger-merged-path: # id of output
     description: 'the path of the merged swagger file'

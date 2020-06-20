@@ -13,6 +13,9 @@ try {
   const swaggerExtPath = core.getInput('swagger-with-extension-path');
   const swaggerExtJson = JSON.parse(fs.readFileSync(swaggerExtPath));
 
+  const tmpPath = core.getInput('tmp-path');
+
+  console.log("============ SWAGGER (JAVA) ====================================================");
   console.log("BEFORE", JSON.stringify(swaggerJson));
   for(var [key, value, jsonpath] of traverse(swaggerExtJson)) {
     if (key.startsWith('x-amazon')) {
@@ -28,12 +31,12 @@ try {
       }
     }
   }
-  console.log("============ MERGED SWAGGER ====================================================");
+  console.log("============ SWAGGER (MERGED) ====================================================");
   const mergedJson = JSON.stringify(swaggerJson);
   console.log("MERGED", mergedJson);
 
   // Save the merged JSON in a file
-  const swaggerMergedPath = path.join(process.env.temp, 'merged-swagger.json');
+  const swaggerMergedPath = path.join(tmpPath, 'merged-swagger.json');
   if (!fs.existsSync(swaggerMergedPath)){
     fs.mkdirSync(swaggerMergedPath);
 }
