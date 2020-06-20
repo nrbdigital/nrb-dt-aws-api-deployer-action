@@ -14,10 +14,10 @@ try {
   const swaggerExtJson = JSON.parse(fs.readFileSync(swaggerExtPath));
 
   console.log("BEFORE", JSON.stringify(swaggerJson));
-  for(var [key, value, path] of traverse(swaggerExtJson)) {
+  for(var [key, value, jsonpath] of traverse(swaggerExtJson)) {
     if (key.startsWith('x-amazon')) {
       // We found an extension. Now find the parent object that owns this extension
-      const parent = path.slice(0, -1);
+      const parent = jsonpath.slice(0, -1);
 
       // We know the parent object and therefore its path in the Swagger object
       // Let's find if this parent object also exists in the Swagger file from JAVA
@@ -42,7 +42,7 @@ try {
 
 function* traverse(o) {
   const memory = new Set();
-  function * innerTraversal (o, path=[]) {
+  function * innerTraversal (o, jsonpath=[]) {
     if(memory.has(o)) {
       // we've seen this object before don't iterate it
       return;
@@ -50,7 +50,7 @@ function* traverse(o) {
     // add the new object to our memory.
     memory.add(o);
     for (var i of Object.keys(o)) {
-      const itemPath = path.concat(i);
+      const itemPath = jsonpath.concat(i);
       yield [i,o[i],itemPath]; 
       if (o[i] !== null && typeof(o[i])=="object") {
         //going one step down in the object tree!!
