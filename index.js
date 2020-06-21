@@ -4,39 +4,43 @@ const wait = require('./wait');
 const AWS = require('aws-sdk');
 const ApiGtw = require('./lib/api-gtw');
 const ApiMerger = require('./lib/api-merger');
+const deploy = require('./lib/deploy');
+const deployDev = require('./lib/deploy-dev');
 
-// most @actions toolkit packages have async methods
 async function run() {
   try { 
-       
+    const targetEnv = core.getInput('target-env') || 'dev';
     const swaggerPath = core.getInput('swagger-path') || `${process.cwd()}/../test/api-gtw-action-tester/swagger/swagger.json`;
-    const tmpPath = core.getInput('tmp-path') || '/tmp';
-    const apiName = core.getInput('api-name') || 'OpenAPI definition';
+    const apiName = core.getInput('api-name') || 'test1-experience-api-v1';
     const region = core.getInput('aws-region') || 'eu-west-1';
+    const basePath = core.getInput('api-base-path') || 'test1-exp-v1';
+    const domainName = core.getInput('api-domain-name') || 'api.sandbox.flora.insure';
     AWS.config.update({ region }); 
 
     const apiGtw = new ApiGtw();
-    let awsApi = await apiGtw.getApiByName(apiName);
-    let awsSwagger = {}
-    if (!awsApi) {
-      // create the API
-      console.log("create the API");
-      awsApi = await apiGtw.createApi(apiName, 'TODO Description');
+    let importedApi;
+
+    const localSwagger = JSON.parse(fs.readFileSync(swaggerPath));
+    
+    if (targetEnv === 'dev') {
+      importedApi = await deployDev({ localSwagger, apiName });
     } else {
-      // extract swagger + extension from AWS API GTW
-      console.log("Existing API", awsApi);
-      const exportedApi = await apiGtw.exportApi(awsApi.id)
-      awsSwagger = JSON.parse(exportedApi.body.toString());
-      console.log("================== AWS SWAGGER", JSON.stringify(awsSwagger))
+      importedApi = await deploy({ localSwagger, apiName });
     }
 
-    // Merge the AWS Swagger with the local Swagger
-    const localSwagger = JSON.parse(fs.readFileSync(swaggerPath));
-    const apiMerger = new ApiMerger(localSwagger, awsSwagger);
-    const mergedSwagger = apiMerger.mergeSwagger();
+    console.log("================== Imported API", JSON.stringify(importedApi, null, 2));
 
-    const importedApi = await apiGtw.importApi(awsApi.id, JSON.stringify(mergedSwagger));
-    console.log("Imported API", importedApi);
+    // Deploy the API on default stage
+    const deployedApi = await apiGtw.createDeployment(importedApi.id, "CICD deployment", "default", "Default");
+    console.log("================== Deployed API", JSON.stringify(deployedApi, null, 2));
+
+    // associate API to custom domain name + base path
+    let basePathMapping = await apiGtw.getBasePathMapping(basePath, domainName);
+    if (!basePathMapping) {
+      basePathMapping = await apiGtw.createBasePathMapping(importedApi.id, basePath, domainName);
+    }
+
+    console.log("================== basePathMapping", JSON.stringify(basePathMapping, null, 2));
   } 
   catch (error) {
     core.setFailed(error.message);
