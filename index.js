@@ -35,12 +35,13 @@ async function run() {
     console.log("================== Deployed API", JSON.stringify(deployedApi, null, 2));
 
     // associate API to custom domain name + base path
+    /* UNCOMMENT LINES BELOW WHEN DOMAIN NAME WILL BE AVAILABLE
     let basePathMapping = await apiGtw.getBasePathMapping(basePath, domainName);
     if (!basePathMapping) {
       basePathMapping = await apiGtw.createBasePathMapping(importedApi.id, basePath, domainName);
     }
 
-    console.log("================== basePathMapping", JSON.stringify(basePathMapping, null, 2));
+    console.log("================== basePathMapping", JSON.stringify(basePathMapping, null, 2));*/
   } 
   catch (error) {
     core.setFailed(error.message);
