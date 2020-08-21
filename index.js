@@ -23,7 +23,7 @@ async function run() {
     const localSwagger = JSON.parse(fs.readFileSync(swaggerPath));
     
     if (targetEnv === 'dev') {
-      importedApi = await deployDev({ localSwagger, apiName });
+      importedApi = await deployDev({ localSwagger, apiName, basePath });
     } else {
       importedApi = await deploy({ localSwagger, apiName });
     }
