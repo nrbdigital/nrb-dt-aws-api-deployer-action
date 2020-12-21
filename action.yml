@@ -16,6 +16,9 @@ inputs:
   api-base-path:
     description: 'The base path of the apy (i.e: /dms-v1)'
     required: false  
+  api-media-types:
+    description: 'The media-types of the apy (i.e: multipart/form-data)'
+    required: false  
   aws-region:
     description: 'The AWS region. Default: eu-west-1'
     required: false               

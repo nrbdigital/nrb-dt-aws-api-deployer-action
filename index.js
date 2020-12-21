@@ -15,6 +15,8 @@ async function run() {
     const region = core.getInput('aws-region') || 'eu-west-1';
     const basePath = core.getInput('api-base-path') || 'test1-exp-v1';
     const domainName = core.getInput('api-domain-name') || 'api.sandbox.flora.insure';
+    const mediaTypes = core.getInput('api-media-types').split("\n") || [];
+    
     AWS.config.update({ region }); 
 
     const apiGtw = new ApiGtw();
@@ -23,13 +25,13 @@ async function run() {
     const localSwagger = JSON.parse(fs.readFileSync(swaggerPath));
     
     if (targetEnv === 'dev') {
-      importedApi = await deployDev({ localSwagger, apiName, basePath });
+      importedApi = await deployDev({ localSwagger, apiName, basePath, mediaTypes });
     } else {
       importedApi = await deploy({ localSwagger, apiName });
     }
 
     console.log("================== Imported API", JSON.stringify(importedApi, null, 2));
-
+    
     // Deploy the API on default stage
     const deployedApi = await apiGtw.createDeployment(importedApi.id, "CICD deployment", "default", "Default");
     console.log("================== Deployed API", JSON.stringify(deployedApi, null, 2));
