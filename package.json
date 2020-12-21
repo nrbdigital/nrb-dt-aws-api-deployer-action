@@ -20,7 +20,7 @@
   "author": "Bruno Franki",
   "license": "MIT",
   "dependencies": {
-    "@actions/core": "^1.2.4",
+    "@actions/core": "^1.2.6",
     "@actions/github": "^3.0.0",
     "aws-sdk": "^2.701.0"
   },
