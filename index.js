@@ -15,7 +15,7 @@ async function run() {
     const region = core.getInput('aws-region') || 'eu-west-1';
     const basePath = core.getInput('api-base-path') || 'test1-exp-v1';
     const domainName = core.getInput('api-domain-name') || 'api.sandbox.flora.insure';
-    const mediaTypes = core.getInput('api-media-types') || [];
+    const mediaTypes = core.getInput('api-media-types').split("\n") || [];
 
     console.log("============= MediaTypes ======================");
     console.log(mediaTypes);
