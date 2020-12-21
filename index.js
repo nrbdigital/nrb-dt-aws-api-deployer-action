@@ -20,7 +20,7 @@ async function run() {
     console.log("============= MediaTypes ======================");
     console.log(mediaTypes);
     console.log("============= End ======================");
-    /*
+    
     AWS.config.update({ region }); 
 
     const apiGtw = new ApiGtw();
@@ -35,7 +35,7 @@ async function run() {
     }
 
     console.log("================== Imported API", JSON.stringify(importedApi, null, 2));
-
+    /*
     // Deploy the API on default stage
     const deployedApi = await apiGtw.createDeployment(importedApi.id, "CICD deployment", "default", "Default");
     console.log("================== Deployed API", JSON.stringify(deployedApi, null, 2));
