@@ -15,6 +15,12 @@ async function run() {
     const region = core.getInput('aws-region') || 'eu-west-1';
     const basePath = core.getInput('api-base-path') || 'test1-exp-v1';
     const domainName = core.getInput('api-domain-name') || 'api.sandbox.flora.insure';
+    const mediaTypes = core.getInput('api-media-types') || [];
+
+    console.log("============= MediaTypes ======================");
+    console.log(mediaTypes);
+    console.log("============= End ======================");
+    /*
     AWS.config.update({ region }); 
 
     const apiGtw = new ApiGtw();
@@ -23,7 +29,7 @@ async function run() {
     const localSwagger = JSON.parse(fs.readFileSync(swaggerPath));
     
     if (targetEnv === 'dev') {
-      importedApi = await deployDev({ localSwagger, apiName, basePath });
+      importedApi = await deployDev({ localSwagger, apiName, basePath, mediaTypes });
     } else {
       importedApi = await deploy({ localSwagger, apiName });
     }
@@ -40,7 +46,7 @@ async function run() {
       basePathMapping = await apiGtw.createBasePathMapping(importedApi.id, basePath, domainName);
     }
 
-    console.log("================== basePathMapping", JSON.stringify(basePathMapping, null, 2));
+    console.log("================== basePathMapping", JSON.stringify(basePathMapping, null, 2));*/
   } 
   catch (error) {
     core.setFailed(error.message);
