@@ -11,6 +11,7 @@ Merge a swagger with extension from AWS API GTW with a standard swagger from a J
 | `api-name`        | x        | The name of the API. Example: Client Experience API                                     |
 | `api-domain-name` | x        | The domain of the API. Example: api.example.com                                      |
 | `api-base-path`   | x        | The base path of the API. Example: client-exp-v1                                        |
+| `api-media-types` |          | The media-types of the API. Example: multipart/form-data                                |
 | `aws-region`      |          | The AWS region on which the API will be deployed. Default: 'eu-west-1'                 |
 
 ## Outputs
