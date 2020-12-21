@@ -35,7 +35,7 @@ async function run() {
     }
 
     console.log("================== Imported API", JSON.stringify(importedApi, null, 2));
-    /*
+    
     // Deploy the API on default stage
     const deployedApi = await apiGtw.createDeployment(importedApi.id, "CICD deployment", "default", "Default");
     console.log("================== Deployed API", JSON.stringify(deployedApi, null, 2));
@@ -46,7 +46,7 @@ async function run() {
       basePathMapping = await apiGtw.createBasePathMapping(importedApi.id, basePath, domainName);
     }
 
-    console.log("================== basePathMapping", JSON.stringify(basePathMapping, null, 2));*/
+    console.log("================== basePathMapping", JSON.stringify(basePathMapping, null, 2));
   } 
   catch (error) {
     core.setFailed(error.message);
