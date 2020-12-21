@@ -27,7 +27,7 @@ with:
   api-domain-name: api.example.com
   api-base-path: client-exp-v1
   api-media-types: |
-          multipart/form-data
-          application/pdf
+    multipart/form-data
+    application/pdf
   aws-region: eu-west-1
 ```
