@@ -16,6 +16,7 @@ async function run() {
     const basePath = core.getInput('api-base-path') || 'test1-exp-v1';
     const domainName = core.getInput('api-domain-name') || 'dev.openapi.ethias.be';
     const mediaTypes = core.getInput('api-media-types').split("\n") || [];
+    const additionalHeaders = core.getInput('api-additional-headers') || '';
     
     AWS.config.update({ region }); 
 
@@ -25,7 +26,7 @@ async function run() {
     const localSwagger = JSON.parse(fs.readFileSync(swaggerPath));
     
     if (targetEnv === 'dev') {
-      importedApi = await deployDev({ localSwagger, apiName, basePath, mediaTypes });
+      importedApi = await deployDev({ localSwagger, apiName, basePath, mediaTypes, additionalHeaders });
     } else {
       importedApi = await deploy({ localSwagger, apiName });
     }
