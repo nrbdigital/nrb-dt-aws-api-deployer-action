@@ -10,11 +10,11 @@ const deployDev = require('./lib/deploy-dev');
 async function run() {
   try { 
     const targetEnv = core.getInput('target-env') || 'dev';
-    const swaggerPath = core.getInput('swagger-path') || `${process.cwd()}/../test/api-gtw-action-tester/swagger/swagger.json`;
+    const swaggerPath = core.getInput('swagger-path') || `${process.cwd()}/swagger.json`;
     const apiName = core.getInput('api-name') || 'test1-experience-api-v1';
     const region = core.getInput('aws-region') || 'eu-west-1';
     const basePath = core.getInput('api-base-path') || 'test1-exp-v1';
-    const domainName = core.getInput('api-domain-name') || 'api.sandbox.flora.insure';
+    const domainName = core.getInput('api-domain-name') || 'dev.openapi.ethias.be';
     const mediaTypes = core.getInput('api-media-types').split("\n") || [];
     
     AWS.config.update({ region }); 
@@ -37,9 +37,12 @@ async function run() {
     console.log("================== Deployed API", JSON.stringify(deployedApi, null, 2));
 
     // associate API to custom domain name + base path
+    // and update stage (only for the first deployment)
     let basePathMapping = await apiGtw.getBasePathMapping(basePath, domainName);
     if (!basePathMapping) {
       basePathMapping = await apiGtw.createBasePathMapping(importedApi.id, basePath, domainName);
+      webAcl = await apiGtw.updateWebAcl(importedApi.id, domainName);
+      stage = await apiGtw.updateStage(importedApi.id, domainName);
     }
 
     console.log("================== basePathMapping", JSON.stringify(basePathMapping, null, 2));
