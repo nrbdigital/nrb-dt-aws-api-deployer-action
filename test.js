@@ -25,7 +25,7 @@ async function run() {
 
     const apiGtw = new ApiGtw();
     
-    await apiGtw.createBasePathMapping('dcy4n0kfnb', 'test-basepath', 'api.sandbox.flora.insure');  
+    await apiGtw.createBasePathMapping('4e71czqpbl', 'esignature-v1', 'dev.openapi.ethias.be');  
   } 
   catch (error) {
     core.setFailed(error.message);

@@ -1,0 +1,152 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+      "title": "Esignature Capability API v1",
+      "description": "Sign documents digitally via Connective",
+      "version": "1.0"
+    },
+    "servers": [
+      {
+        "url": "https://dev.openapi.ethias.be/{basePath}",
+        "variables": {
+          "basePath": {
+            "default": "/esignature-v1"
+          }
+        }
+      }
+    ],
+    "paths": {
+      "/healthchecks": {
+        "get": {
+          "operationId": "health",
+          "responses": {
+            "200": {
+              "description": "200 response",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/HealthResponse"
+                  }
+                }
+              }
+            }
+          },
+          "x-amazon-apigateway-integration": {
+            "responses": {
+              "default": {
+                "statusCode": "200"
+              }
+            },
+            "requestTemplates": {
+              "application/json": "{\"statusCode\": 200}"
+            },
+            "passthroughBehavior": "when_no_match",
+            "type": "mock"
+          }
+        },
+        "post": {
+          "operationId": "advancedHealthcheck",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthRequest"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "200 response",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/HealthResponse"
+                  }
+                }
+              }
+            }
+          },
+          "x-amazon-apigateway-integration": {
+            "responses": {
+              "default": {
+                "statusCode": "200"
+              }
+            },
+            "requestTemplates": {
+              "application/json": "{\"statusCode\": 200}"
+            },
+            "passthroughBehavior": "when_no_match",
+            "type": "mock"
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "HealthRequest": {
+          "type": "object",
+          "properties": {
+            "healthChecks": {
+              "type": "array",
+              "description": "The list of health checks to perform. If null, all health checks are perfomed",
+              "items": {
+                "type": "string",
+                "description": "The list of health checks to perform. If null, all health checks are perfomed"
+              }
+            }
+          }
+        },
+        "HealthCheck": {
+          "required": [
+            "name",
+            "status"
+          ],
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "The name of the health check"
+            },
+            "status": {
+              "type": "string",
+              "description": "The result of the health check",
+              "enum": [
+                "Ok",
+                "Nok"
+              ]
+            },
+            "errorMsg": {
+              "type": "string",
+              "description": "The error message if status = Nok"
+            }
+          },
+          "description": "The list of health checks performed"
+        },
+        "HealthResponse": {
+          "required": [
+            "status"
+          ],
+          "type": "object",
+          "properties": {
+            "healthChecks": {
+              "type": "array",
+              "description": "The list of health checks performed",
+              "items": {
+                "$ref": "#/components/schemas/HealthCheck"
+              }
+            },
+            "status": {
+              "type": "string",
+              "description": "Indicate if the service is up and running",
+              "enum": [
+                "Ok",
+                "Nok"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
