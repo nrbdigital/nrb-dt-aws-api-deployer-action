@@ -19,7 +19,7 @@ inputs:
   api-media-types:
     description: 'The media-types of the apy (i.e: multipart/form-data)'
     required: false  
-  api-web-acls:
+  api-web-acl:
     description: 'The web-acl of the api (i.e: eth-oi-dev-acl, none)'
     required: false 
   aws-region:
