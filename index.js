@@ -16,6 +16,7 @@ async function run() {
     const basePath = core.getInput('api-base-path') || 'test1-exp-v1';
     const domainName = core.getInput('api-domain-name') || 'dev.openapi.ethias.be';
     const mediaTypes = core.getInput('api-media-types').split("\n") || [];
+    const webAcl = core.getInput('api-web-acl') || '';
     const additionalHeaders = core.getInput('api-additional-headers') || '';
     
     AWS.config.update({ region }); 
@@ -38,8 +39,8 @@ async function run() {
     console.log("================== Deployed API", JSON.stringify(deployedApi, null, 2));
 
     // Associate a web ACL to the stage
-    let webAcl = await apiGtw.updateWebAcl(importedApi.id, domainName);
-    console.log("================== Web ACL", JSON.stringify(webAcl, null, 2));
+    let webAclUpdated = await apiGtw.updateWebAcl(importedApi.id, webAcl, domainName);
+    console.log("================== Web ACL", JSON.stringify(webAclUpdated, null, 2));
 
     // Add stage variable and enable logs
     let stage = await apiGtw.updateStage(importedApi.id, domainName);
