@@ -35,7 +35,7 @@ async function run() {
     console.log("================== Imported API", JSON.stringify(importedApi, null, 2));
     
     // Deploy the API on default stage
-    const deployedApi = await apiGtw.createDeployment(importedApi.id, "Test githubaction", "default", "Default");
+    const deployedApi = await apiGtw.createDeployment(importedApi.id, "CICD deployment", "default", "Default");
     console.log("================== Deployed API", JSON.stringify(deployedApi, null, 2));
 
     // Associate a web ACL to the stage
