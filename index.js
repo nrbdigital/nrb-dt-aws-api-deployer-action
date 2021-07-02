@@ -36,7 +36,7 @@ async function run() {
     let webAclUpdated = await apiGtw.updateWebAcl(importedApi.id, webAcl, domainName);
     console.log("================== Web ACL", JSON.stringify(webAclUpdated, null, 2));
 
-    // Add stage variable and enable logs
+    // Add stage variable, enable logs and select most recent client certificate
     let stage = await apiGtw.updateStage(importedApi.id, domainName);
     console.log("================== Stage", JSON.stringify(stage, null, 2));
 
