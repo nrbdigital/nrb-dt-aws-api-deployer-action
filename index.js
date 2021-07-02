@@ -5,11 +5,9 @@ const AWS = require('aws-sdk');
 const ApiGtw = require('./lib/api-gtw');
 const ApiMerger = require('./lib/api-merger');
 const deploy = require('./lib/deploy');
-const deployDev = require('./lib/deploy-dev');
 
 async function run() {
   try { 
-    const targetEnv = core.getInput('target-env') || 'dev';
     const swaggerPath = core.getInput('swagger-path') || `${process.cwd()}/swagger.json`;
     const apiName = core.getInput('api-name') || 'Test githubaction API v1';
     const region = core.getInput('aws-region') || 'eu-west-1';
@@ -26,11 +24,7 @@ async function run() {
 
     const localSwagger = JSON.parse(fs.readFileSync(swaggerPath));
     
-    if (targetEnv === 'dev') {
-      importedApi = await deployDev({ localSwagger, apiName, basePath, mediaTypes, additionalHeaders });
-    } else {
-      importedApi = await deploy({ localSwagger, apiName });
-    }
+    importedApi = await deploy({ localSwagger, apiName, basePath, mediaTypes, additionalHeaders });
 
     console.log("================== Imported API", JSON.stringify(importedApi, null, 2));
     
