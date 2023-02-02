@@ -29,5 +29,5 @@ outputs:
   swagger-merged-path: # id of output
     description: 'the path of the swagger with extension'
 runs:
-  using: 'node12'
+  using: 'node16'
   main: 'index.js'
