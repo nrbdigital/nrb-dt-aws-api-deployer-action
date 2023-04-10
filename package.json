@@ -22,7 +22,7 @@
   "dependencies": {
     "@actions/core": "^1.2.6",
     "@actions/github": "^3.0.0",
-    "aws-sdk": "^2.701.0"
+    "aws-sdk": "^2.1354.0"
   },
   "devDependencies": {
     "@zeit/ncc": "^0.20.5",
