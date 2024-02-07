@@ -11,7 +11,7 @@ async function run() {
     const swaggerPath = core.getInput('swagger-path') || `${process.cwd()}/swagger.json`;
     const apiName = core.getInput('api-name') || 'Test githubaction API v1';
     const region = core.getInput('aws-region') || 'eu-west-1';
-    const basePath = core.getInput('api-base-path') || 'test1-exp-v1';
+    const basePath = core.getInput('api-base-path') || '';
     const domainName = core.getInput('api-domain-name') || 'dev.openapi.ethias.be';
     const mediaTypes = core.getInput('api-media-types').split("\n") || [];
     const webAcl = core.getInput('api-web-acl') || ''; // Value received is always a string (then false is in fact 'false')
