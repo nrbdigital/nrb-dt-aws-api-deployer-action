@@ -23,6 +23,15 @@ async function run() {
     const apiGtw = new ApiGtw();
     let importedApi;
 
+    console.log("*********SOURCE*******");
+    console.log(basePathSource);
+    console.log("****************");    
+    console.log("********TARGET********");
+    console.log(basePathTarget);
+    console.log("****************");
+    
+
+
     const localSwagger = JSON.parse(fs.readFileSync(swaggerPath));
     
     importedApi = await deploy({ localSwagger, apiName, basePathTarget, mediaTypes, additionalHeaders });
