@@ -30,7 +30,7 @@ async function run() {
     console.log(basePathTarget);
     console.log("****************");
 
-    const targetPath = basePathTarget;
+    const targetPath = basePathSource;
     
     const localSwagger = JSON.parse(fs.readFileSync(swaggerPath));
     
