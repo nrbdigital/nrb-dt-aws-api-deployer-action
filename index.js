@@ -29,12 +29,12 @@ async function run() {
     console.log("********TARGET********");
     console.log(basePathTarget);
     console.log("****************");
+
+    const targetPath = basePathTarget;
     
-
-
     const localSwagger = JSON.parse(fs.readFileSync(swaggerPath));
     
-    importedApi = await deploy({ localSwagger, apiName, basePathSource, mediaTypes, additionalHeaders });
+    importedApi = await deploy({ localSwagger, apiName, targetPath, mediaTypes, additionalHeaders });
 
     console.log("================== Imported API", JSON.stringify(importedApi, null, 2));
     
