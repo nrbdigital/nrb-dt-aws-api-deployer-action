@@ -34,7 +34,7 @@ async function run() {
 
     const localSwagger = JSON.parse(fs.readFileSync(swaggerPath));
     
-    importedApi = await deploy({ localSwagger, apiName, basePathTarget, mediaTypes, additionalHeaders });
+    importedApi = await deploy({ localSwagger, apiName, basePathSource, mediaTypes, additionalHeaders });
 
     console.log("================== Imported API", JSON.stringify(importedApi, null, 2));
     
