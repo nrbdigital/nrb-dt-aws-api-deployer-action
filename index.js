@@ -11,7 +11,8 @@ async function run() {
     const swaggerPath = core.getInput('swagger-path') || `${process.cwd()}/swagger.json`;
     const apiName = core.getInput('api-name') || 'Test githubaction API v1';
     const region = core.getInput('aws-region') || 'eu-west-1';
-    const basePath = core.getInput('api-base-path') || '';
+    const basePathTarget = core.getInput('api-base-path-target') || '';
+    const basePathSource = core.getInput('api-base-path-source') || '';
     const domainName = core.getInput('api-domain-name') || 'dev.openapi.ethias.be';
     const mediaTypes = core.getInput('api-media-types').split("\n") || [];
     const webAcl = core.getInput('api-web-acl') || ''; // Value received is always a string (then false is in fact 'false')
@@ -24,7 +25,7 @@ async function run() {
 
     const localSwagger = JSON.parse(fs.readFileSync(swaggerPath));
     
-    importedApi = await deploy({ localSwagger, apiName, basePath, mediaTypes, additionalHeaders });
+    importedApi = await deploy({ localSwagger, apiName, basePathTarget, mediaTypes, additionalHeaders });
 
     console.log("================== Imported API", JSON.stringify(importedApi, null, 2));
     
@@ -41,9 +42,9 @@ async function run() {
     console.log("================== Stage", JSON.stringify(stage, null, 2));
 
     // Associate API to custom domain name + base path
-    let basePathMapping = await apiGtw.getBasePathMapping(basePath, domainName);
+    let basePathMapping = await apiGtw.getBasePathMapping(basePathSource, domainName);
     if (!basePathMapping) {
-      basePathMapping = await apiGtw.createBasePathMapping(importedApi.id, basePath, domainName);
+      basePathMapping = await apiGtw.createBasePathMapping(importedApi.id, basePathSource, domainName);
     }
 
     console.log("================== basePathMapping", JSON.stringify(basePathMapping, null, 2));

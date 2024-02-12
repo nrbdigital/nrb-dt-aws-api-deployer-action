@@ -13,7 +13,10 @@ inputs:
   api-domain-name:
     description: 'The domain name of the API (i.e: api.example.com)'
     required: false
-  api-base-path:
+  api-base-path-source:
+    description: 'The base path of the apy (i.e: /dms-v1)'
+    required: false
+  api-base-path-target:
     description: 'The base path of the apy (i.e: /dms-v1)'
     required: false  
   api-media-types:
